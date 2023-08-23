@@ -705,7 +705,7 @@ def plot_heatmap(
 # =============================================================================
 class DendrogramPlotter(object):
     def __init__(
-        self, data, linkage, metric, method, axis, label, rotate, dendrogram_kws=None
+        self, data, metric, method, axis, label, rotate, dendrogram_kws=None, linkage=None
     ):
         self.axis = axis
         if (
@@ -1032,6 +1032,7 @@ class ClusterMapPlotter:
         show_colnames=False,
         row_names_side="right",
         col_names_side="bottom",
+        precomputed_linkage=None,
         row_dendrogram=False,
         col_dendrogram=False,
         row_dendrogram_size=10,
@@ -1085,6 +1086,7 @@ class ClusterMapPlotter:
         self.show_colnames = show_colnames
         self.row_names_side = row_names_side
         self.col_names_side = col_names_side
+        self.precomputed_linkage = precomputed_linkage
         self.row_dendrogram = row_dendrogram
         self.col_dendrogram = col_dendrogram
         self.subplot_gap = subplot_gap
@@ -1418,7 +1420,7 @@ class ClusterMapPlotter:
         if self.row_cluster:
             self.dendrogram_row = DendrogramPlotter(
                 data,
-                linkage=None,
+                linkage=self.precomputed_linkage,
                 axis=0,
                 metric=self.row_cluster_metric,
                 method=self.row_cluster_method,
@@ -1435,7 +1437,7 @@ class ClusterMapPlotter:
         if self.col_cluster:
             self.dendrogram_col = DendrogramPlotter(
                 data,
-                linkage=None,
+                linkage=self.precomputed_linkage,
                 axis=1,
                 metric=self.col_cluster_metric,
                 method=self.col_cluster_method,
